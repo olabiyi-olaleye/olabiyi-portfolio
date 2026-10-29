@@ -1,19 +1,34 @@
+import Image from "next/image";
 import {
-  about,
   caseStudies,
   dataProjects,
   education,
   experience,
+  notes,
   profile,
   projects,
   skillGroups,
+  stats,
 } from "./content";
+import { ThemeToggle } from "./theme-toggle";
 
-function ExternalLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
+function Ext({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
     </a>
+  );
+}
+
+function SectionHead({ index, title, note }: { index: string; title: string; note?: string }) {
+  return (
+    <div className="section-head">
+      <p className="kicker">
+        <span className="accent">{index}</span> {"//"} {title.toLowerCase()}
+      </p>
+      <h2>{title}</h2>
+      {note ? <p className="section-note">{note}</p> : null}
+    </div>
   );
 }
 
@@ -23,82 +38,153 @@ export default function Home() {
       <header className="nav">
         <div className="wrap nav-inner">
           <a href="#top" className="brand">
-            Olabiyi Olaleye
+            <span className="accent">~/</span>
+            {profile.handle}
           </a>
           <nav aria-label="Sections">
-            <a href="#work">Work</a>
-            <a href="#case-studies">Case studies</a>
-            <a href="#data">Data</a>
-            <a href="#contact">Contact</a>
+            <a href="#work">work</a>
+            <a href="#notes">notes</a>
+            <a href="#day-job">day job</a>
+            <a href="#data">data</a>
+            <a href="#contact">contact</a>
           </nav>
+          <div className="nav-actions">
+            <a className="btn btn-sm" href={profile.cv} download>
+              CV
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
       <main id="top">
         <section className="hero wrap">
-          <p className="eyebrow">{profile.location}</p>
-          <h1>{profile.name}</h1>
-          <p className="role">{profile.role}</p>
-          <p className="lead">{profile.intro}</p>
-          <div className="actions">
-            <a className="btn primary" href={`mailto:${profile.email}`}>
-              Email me
-            </a>
-            <ExternalLink className="btn" href={profile.linkedin}>
-              LinkedIn
-            </ExternalLink>
-            <ExternalLink className="btn" href={profile.github}>
-              GitHub
-            </ExternalLink>
+          <div className="hero-text">
+            <p className="status">
+              <span className="dot" aria-hidden="true" />
+              {profile.status} · {profile.location}
+            </p>
+            <h1>{profile.name}</h1>
+            <p className="role">
+              {profile.role} <span className="muted">·</span> <span className="mono">{profile.stackLine}</span>
+            </p>
+            <p className="lead">{profile.intro}</p>
+            <div className="actions">
+              <Ext className="btn primary" href={profile.cal}>
+                Book a 20-min call
+              </Ext>
+              <a className="btn" href={`mailto:${profile.email}`}>
+                Email me
+              </a>
+              <a className="btn" href={profile.cv} download>
+                Download CV
+              </a>
+            </div>
+            <p className="links mono">
+              <Ext href={profile.github}>github</Ext>
+              <span aria-hidden="true">/</span>
+              <Ext href={profile.linkedin}>linkedin</Ext>
+            </p>
+          </div>
+          <div className="hero-photo">
+            <Image src={profile.photo} alt="Olabiyi Olaleye" width={320} height={320} priority />
+            <div className="photo-tag mono">
+              <span className="accent">$</span> whoami
+              <br />
+              olabiyi · software engineer · lagos
+            </div>
           </div>
         </section>
 
-        <section className="wrap about">
-          {about.map((p) => (
-            <p key={p.slice(0, 24)}>{p}</p>
+        <section className="wrap stats" aria-label="At a glance">
+          {stats.map((s) => (
+            <div key={s.label} className="stat">
+              <strong>{s.value}</strong>
+              <span>{s.label}</span>
+            </div>
           ))}
         </section>
 
         <section id="work" className="wrap section">
-          <h2>Things I&rsquo;ve built</h2>
-          <p className="section-note">Both are live. Open the demo, then read the code.</p>
+          <SectionHead index="01" title="Things I've built" note="Both are live. Open the demo, then read the code." />
           <div className="projects">
             {projects.map((p) => (
               <article key={p.name} className="card project">
-                <p className="eyebrow">{p.tagline}</p>
-                <h3>{p.name}</h3>
-                <p>{p.description}</p>
-                <ul>
-                  {p.points.map((pt) => (
-                    <li key={pt}>{pt}</li>
-                  ))}
-                </ul>
-                <ul className="tags" aria-label="Built with">
-                  {p.stack.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
-                <div className="card-links">
-                  <ExternalLink href={p.demo}>Live demo ↗</ExternalLink>
-                  <ExternalLink href={p.code}>Code on GitHub ↗</ExternalLink>
+                <div className="shot">
+                  <div className="shot-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span className="mono">{p.demo.replace("https://", "")}</span>
+                  </div>
+                  <Image src={p.image} alt={p.imageAlt} width={1124} height={700} />
+                </div>
+                <div className="project-body">
+                  <p className="kicker">{p.tagline}</p>
+                  <h3>{p.name}</h3>
+                  <p>{p.description}</p>
+                  <ul className="ticks">
+                    {p.points.map((pt) => (
+                      <li key={pt}>{pt}</li>
+                    ))}
+                  </ul>
+                  <ul className="tags" aria-label="Built with">
+                    {p.stack.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                  <div className="card-links">
+                    <Ext href={p.demo}>Live demo ↗</Ext>
+                    <Ext href={p.code}>Code on GitHub ↗</Ext>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="case-studies" className="wrap section">
-          <h2>From my day job</h2>
-          <p className="section-note">
-            This is client and company work, so there&rsquo;s no code here. It&rsquo;s what the problem was and what I did about it.
-          </p>
+        <section id="notes" className="wrap section">
+          <SectionHead
+            index="02"
+            title="Engineering notes"
+            note="Problems that only showed up with real users, and the code that fixed them."
+          />
+          <div className="notes">
+            {notes.map((n) => (
+              <article key={n.title} className="card note">
+                <p className="kicker">{n.project}</p>
+                <h3>{n.title}</h3>
+                <p>{n.problem}</p>
+                <p className="fix">
+                  <span className="accent">fix:</span> {n.fix}
+                </p>
+                <figure className="code">
+                  <figcaption className="mono">{n.file}</figcaption>
+                  <pre>
+                    <code>{n.code}</code>
+                  </pre>
+                </figure>
+                <Ext href={n.href} className="more">
+                  See it on GitHub ↗
+                </Ext>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="day-job" className="wrap section">
+          <SectionHead
+            index="03"
+            title="From my day job"
+            note="Company work, so there's no code here. This is what the problem was and what I did."
+          />
           <div className="cases">
             {caseStudies.map((c) => (
               <article key={c.title} className="case">
                 <h3>{c.title}</h3>
-                <p className="case-context">{c.context}</p>
+                <p className="case-context mono">{c.context}</p>
                 <p>{c.problem}</p>
-                <ul>
+                <ul className="ticks">
                   {c.work.map((w) => (
                     <li key={w}>{w}</li>
                   ))}
@@ -109,41 +195,31 @@ export default function Home() {
         </section>
 
         <section id="data" className="wrap section">
-          <h2>Data work</h2>
-          <p className="section-note">Analysis projects from when I was sharpening the data side, each with a full write-up.</p>
+          <SectionHead index="04" title="Data work" note="Analysis projects, each with a full write-up and the queries or files." />
           <div className="data-grid">
             {dataProjects.map((d) => (
-              <ExternalLink key={d.name} href={d.href} className="card data-card">
-                <span className="eyebrow">{d.tool}</span>
+              <Ext key={d.name} href={d.href} className="card data-card">
+                <span className="kicker">{d.tool}</span>
                 <strong>{d.name}</strong>
-                <span>{d.note}</span>
+                <span className="muted">{d.note}</span>
                 <span className="more">Read it ↗</span>
-              </ExternalLink>
+              </Ext>
             ))}
           </div>
         </section>
 
         <section className="wrap section two-col">
           <div>
-            <h2>What I work with</h2>
-            <dl className="skills">
-              {skillGroups.map((g) => (
-                <div key={g.label}>
-                  <dt>{g.label}</dt>
-                  <dd>{g.items.join(" · ")}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div>
-            <h2>Where I&rsquo;ve worked</h2>
+            <SectionHead index="05" title="Where I've worked" />
             <ol className="timeline">
               {experience.map((e) => (
-                <li key={e.org}>
-                  <strong>{e.role}</strong>, {e.org}
-                  <span>
-                    {e.when} · {e.where}
+                <li key={e.org + e.when}>
+                  <span className="when mono">{e.when}</span>
+                  <strong>{e.role}</strong>
+                  <span className="org">
+                    {e.org} · {e.where}
                   </span>
+                  <span className="muted">{e.note}</span>
                 </li>
               ))}
             </ol>
@@ -154,25 +230,55 @@ export default function Home() {
               ))}
             </ul>
           </div>
+          <div>
+            <SectionHead index="06" title="What I work with" />
+            <dl className="skills">
+              {skillGroups.map((g) => (
+                <div key={g.label}>
+                  <dt className="mono">
+                    <span className="accent">{g.label}</span>:
+                  </dt>
+                  <dd>{g.items.join(", ")}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </section>
 
         <section id="contact" className="wrap section contact">
-          <h2>Let&rsquo;s talk</h2>
-          <p>
-            I&rsquo;m looking for a remote frontend, full-stack or mobile role, ideally somewhere the data side gets used too. The
-            quickest way to reach me is email.
-          </p>
-          <p className="contact-links">
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            <ExternalLink href={profile.linkedin}>LinkedIn ↗</ExternalLink>
-            <ExternalLink href={profile.github}>GitHub ↗</ExternalLink>
-          </p>
+          <div className="card contact-card">
+            <p className="kicker">
+              <span className="accent">07</span> {"//"} contact
+            </p>
+            <h2>Let&rsquo;s talk</h2>
+            <p>
+              I&rsquo;m looking for a remote frontend, full-stack or mobile role, ideally where the data side gets used too.
+              The quickest way to reach me is a 20-minute call or an email.
+            </p>
+            <div className="actions">
+              <Ext className="btn primary" href={profile.cal}>
+                Book a 20-min call
+              </Ext>
+              <a className="btn" href={`mailto:${profile.email}`}>
+                {profile.email}
+              </a>
+            </div>
+            <p className="links mono">
+              <Ext href={profile.github}>github</Ext>
+              <span aria-hidden="true">/</span>
+              <Ext href={profile.linkedin}>linkedin</Ext>
+              <span aria-hidden="true">/</span>
+              <a href={profile.cv} download>
+                cv.pdf
+              </a>
+            </p>
+          </div>
         </section>
       </main>
 
-      <footer className="wrap footer">
+      <footer className="wrap footer mono">
         <p>
-          © {new Date().getFullYear()} {profile.name} · Lagos, Nigeria
+          © {new Date().getFullYear()} {profile.name} · Lagos, Nigeria · built with Next.js, deployed on Vercel
         </p>
       </footer>
     </>
