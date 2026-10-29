@@ -6,7 +6,7 @@ export const profile = {
   location: "Lagos, Nigeria · open to remote work",
   email: "olabiyi.olaleye23@gmail.com",
   linkedin: "https://www.linkedin.com/in/olabiyi-olaleye-94b896128",
-  github: "https://github.com/DataByOlabiyi",
+  github: "https://github.com/olabiyi-olaleye",
   intro:
     "I build web and mobile products that people pay through, book through and check in with. Six years of React, most of it on Nigerian products: event ticketing, lending, short-let bookings. I write TypeScript on the front end, Node behind it, and I reach for SQL when the numbers in production stop adding up.",
 };
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Drizzle", "Turborepo", "Playwright"],
     demo: "https://evermora-web.vercel.app",
-    code: "https://github.com/DataByOlabiyi/evermora-memorials",
+    code: "https://github.com/olabiyi-olaleye/evermora-memorials",
   },
   {
     name: "Wedding Photo Sharing",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js", "React 19", "TypeScript", "Supabase", "Upstash Redis", "Tailwind CSS"],
     demo: "https://wedding-photo-platform.vercel.app",
-    code: "https://github.com/DataByOlabiyi/wedding-photo-sharing",
+    code: "https://github.com/olabiyi-olaleye/wedding-photo-sharing",
   },
 ];
 
@@ -106,19 +106,19 @@ export const dataProjects = [
     name: "Brazilian e-commerce analysis",
     tool: "SQL · MySQL",
     note: "120,000 records. São Paulo is over 40% of customers, and delivery takes 8 days there against 29 in Roraima.",
-    href: "https://github.com/DataByOlabiyi/SQL_Project_Ecommerce_Analysis",
+    href: "https://github.com/olabiyi-olaleye/SQL_Project_Ecommerce_Analysis",
   },
   {
     name: "Vintage Couture sales report",
     tool: "Power BI",
     note: "₦18.41m in revenue for a Nigerian vintage retailer, broken down by channel, region, age group and month.",
-    href: "https://github.com/DataByOlabiyi/PowerBI_Project_Vintage_Couture",
+    href: "https://github.com/olabiyi-olaleye/PowerBI_Project_Vintage_Couture",
   },
   {
     name: "Data science salaries during COVID-19",
     tool: "Excel",
     note: "Cleaned a global salary dataset and built a dashboard on pay by region, role, experience and remote work.",
-    href: "https://github.com/DataByOlabiyi/Excel_Project_Global_Data_Science_Salaries",
+    href: "https://github.com/olabiyi-olaleye/Excel_Project_Global_Data_Science_Salaries",
   },
 ];
 
