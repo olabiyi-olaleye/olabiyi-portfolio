@@ -12,8 +12,8 @@
   --accent-soft: rgba(94, 234, 212, 0.1);
   --code-bg: #0f1318;
   --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
-  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: var(--font-inter, system-ui), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains, ui-monospace), ui-monospace, "SFMono-Regular", Menlo, monospace;
   --radius: 14px;
   color-scheme: dark;
 }
@@ -491,13 +491,24 @@ p {
 .notes {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
 }
 
 .note {
-  padding: 22px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.note-text {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+}
+
+.note h3 {
+  margin-top: 0.2rem;
 }
 
 .note p {
@@ -510,11 +521,12 @@ p {
 }
 
 .code {
-  margin: 0 0 1rem;
+  margin: 0;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--code-bg);
   overflow: hidden;
+  min-width: 0;
 }
 
 .code figcaption {
@@ -522,16 +534,27 @@ p {
   color: var(--muted);
   padding: 7px 12px;
   border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 
 .code pre {
   margin: 0;
-  padding: 12px;
+  padding: 14px;
   overflow-x: auto;
   font-family: var(--font-mono);
-  font-size: 0.76rem;
-  line-height: 1.6;
+  font-size: 0.78rem;
+  line-height: 1.65;
   color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 860px) {
+  .note {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+  }
 }
 
 .more {
@@ -685,8 +708,44 @@ p {
 
 .footer {
   border-top: 1px solid var(--line);
+  margin: 0;
   padding-top: 18px;
   padding-bottom: 36px;
   color: var(--muted);
   font-size: 0.78rem;
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip:focus {
+  top: 12px;
+}
+
+@media (max-width: 480px) {
+  .hero-photo {
+    max-width: 180px;
+  }
+  .photo-tag {
+    display: none;
+  }
+}
+
+/* 404 */
+.lost {
+  min-height: 70vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 8px;
 }

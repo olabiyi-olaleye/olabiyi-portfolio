@@ -35,6 +35,9 @@ function SectionHead({ index, title, note }: { index: string; title: string; not
 export default function Home() {
   return (
     <>
+      <a href="#top" className="skip">
+        Skip to content
+      </a>
       <header className="nav">
         <div className="wrap nav-inner">
           <a href="#top" className="brand">
@@ -152,21 +155,23 @@ export default function Home() {
           <div className="notes">
             {notes.map((n) => (
               <article key={n.title} className="card note">
-                <p className="kicker">{n.project}</p>
-                <h3>{n.title}</h3>
-                <p>{n.problem}</p>
-                <p className="fix">
-                  <span className="accent">fix:</span> {n.fix}
-                </p>
+                <div className="note-text">
+                  <p className="kicker">{n.project}</p>
+                  <h3>{n.title}</h3>
+                  <p>{n.problem}</p>
+                  <p className="fix">
+                    <span className="accent">fix:</span> {n.fix}
+                  </p>
+                  <Ext href={n.href} className="more">
+                    See it on GitHub ↗
+                  </Ext>
+                </div>
                 <figure className="code">
                   <figcaption className="mono">{n.file}</figcaption>
-                  <pre>
+                  <pre tabIndex={0} aria-label={`Code from ${n.file}`}>
                     <code>{n.code}</code>
                   </pre>
                 </figure>
-                <Ext href={n.href} className="more">
-                  See it on GitHub ↗
-                </Ext>
               </article>
             ))}
           </div>
@@ -276,9 +281,10 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="wrap footer mono">
-        <p>
-          © {new Date().getFullYear()} {profile.name} · Lagos, Nigeria · built with Next.js, deployed on Vercel
+      <footer className="wrap mono">
+        <p className="footer">
+          © {new Date().getFullYear()} {profile.name} · Lagos, Nigeria · built with Next.js, deployed on Vercel ·{" "}
+          <Ext href="https://github.com/olabiyi-olaleye/olabiyi-portfolio">source</Ext>
         </p>
       </footer>
     </>
