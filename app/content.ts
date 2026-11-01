@@ -20,8 +20,8 @@ export const profile = {
 export const stats = [
   { value: "6 yrs", label: "building with React" },
   { value: "2", label: "products of my own, live" },
-  { value: "17", label: "pgTAP permission test files in Evermora" },
-  { value: "2", label: "AI features shipped on a deal platform" },
+  { value: "2 yrs", label: "working remotely for a US company" },
+  { value: "120k", label: "e-commerce records analysed in SQL" },
 ];
 
 export type Project = {
