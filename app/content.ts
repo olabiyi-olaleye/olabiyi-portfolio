@@ -47,10 +47,8 @@ export const projects: Project[] = [
     points: [
       "Three Next.js apps in one Turborepo, sharing a domain layer with no framework code in it",
       "Every permission is checked three times: in the UI, in the domain layer and by Postgres Row Level Security",
-      "17 pgTAP test files log in as visitor, owner, editor, moderator and admin and check what each one can see",
-      "Playwright runs 100+ end-to-end tests against a local Supabase stack in CI",
     ],
-    stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Drizzle", "Turborepo", "pgTAP", "Playwright"],
+    stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Drizzle", "Turborepo"],
     demo: "https://evermora-web.vercel.app",
     code: "https://github.com/olabiyi-olaleye/evermora-memorials",
   },
@@ -121,20 +119,17 @@ const { allowed, remaining, resetTime } =
     project: "Evermora",
     problem:
       "A memorial can be public, link-only or private, and families add editors and moderators. A bug in one screen shouldn't be enough to leak a private photo.",
-    fix: "Postgres decides who can read a file, and pgTAP tests log in as each role to prove it.",
+    fix: "Postgres decides who can read a file, so a mistake in one screen can't expose a private photo.",
     lang: "sql",
-    file: "supabase/migrations + supabase/tests/060_rls_media_test.sql",
+    file: "supabase/migrations",
     code: `create policy "memorial-private read" on storage.objects
   for select to anon, authenticated
   using (
     bucket_id = 'memorial-private'
     and ( app.is_memorial_member(app.storage_memorial_id(name))
           or /* published, public memorial and public photos */ ... )
-  );
-
--- test: a stranger cannot see a private memorial's photo
-select pg_temp.login_as('a0000000-0000-4000-a000-000000000004');`,
-    href: "https://github.com/olabiyi-olaleye/evermora-memorials/tree/main/supabase/tests",
+  );`,
+    href: "https://github.com/olabiyi-olaleye/evermora-memorials/tree/main/supabase/migrations",
   },
 ];
 
@@ -242,7 +237,7 @@ export const skillGroups: { label: string; items: string[] }[] = [
   { label: "backend", items: ["Node.js", "NestJS", "Express", "REST APIs", "Supabase", "Upstash Redis"] },
   { label: "data", items: ["SQL", "PostgreSQL", "MySQL", "MongoDB", "Power BI", "Tableau", "Excel"] },
   { label: "ai", items: ["Claude API", "OpenAI API", "Prompt design", "Output evaluation", "Claude Code"] },
-  { label: "tools", items: ["Git", "Azure DevOps", "Turborepo", "Vercel", "Sentry", "Playwright", "pgTAP"] },
+  { label: "tools", items: ["Git", "Azure DevOps", "Turborepo", "Vercel", "Sentry"] },
 ];
 
 export const education = [
